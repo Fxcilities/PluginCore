@@ -113,7 +113,6 @@ fabric.properties
 
 # custom shit bc it didnt do it for me
 .idea
-gradle/
 
 ### Java ###
 # Compiled class file
