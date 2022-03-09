@@ -31,17 +31,16 @@ public abstract class Core extends JavaPlugin implements Global {
 
         onPluginEnable();
 
+        try {
+            Field bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
+            bukkitCommandMap.setAccessible(true);
+            CommandMap commandMap = (CommandMap) bukkitCommandMap.get(Bukkit.getServer());
+        } catch (NoSuchFieldException | SecurityException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
         for (ServerCommand command : commands) {
-            try {
-                final Field bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
-
-                bukkitCommandMap.setAccessible(true);
-                CommandMap commandMap = (CommandMap) bukkitCommandMap.get(Bukkit.getServer());
-                commandMap.register(command.getLabel(), command);
-
-            } catch (NoSuchFieldException | SecurityException | IllegalAccessException e) {
-                e.printStackTrace();
-            }
+            commandMap.register(command.getLabel(), command);
         }
 
         console.print(true, getPluginName() + " &fis running &c" + VERSION);
