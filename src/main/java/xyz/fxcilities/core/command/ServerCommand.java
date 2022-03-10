@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 public abstract class ServerCommand extends BukkitCommand {
 
-    private boolean playerOnly;
+    private final boolean playerOnly;
     protected CommandSender sender;
     protected String[] args;
 

@@ -7,9 +7,9 @@ import org.jetbrains.annotations.Nullable;
 import xyz.fxcilities.core.Core;
 
 public class PAPIExpansion extends PlaceholderExpansion {
-    private final PlaceholderManager manager;
+    private final ExtensionHandler manager;
 
-    public PAPIExpansion(PlaceholderManager manager) {
+    public PAPIExpansion(ExtensionHandler manager) {
         this.manager = manager;
     }
 
