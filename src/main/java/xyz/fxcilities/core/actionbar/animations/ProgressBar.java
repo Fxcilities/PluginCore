@@ -1,6 +1,7 @@
 package xyz.fxcilities.core.actionbar.animations;
 
 import org.bukkit.scheduler.BukkitRunnable;
+import xyz.fxcilities.core.Core;
 import xyz.fxcilities.core.actionbar.PlayerActionBar;
 
 import java.util.stream.Collectors;
@@ -30,6 +31,8 @@ public class ProgressBar extends BukkitRunnable {
         this.begin = begin;
         this.middle = middle;
         this.end = end;
+
+        runTaskTimer(Core.getInstance(), 0L, 1L);
     }
 
     @Override
