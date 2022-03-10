@@ -54,6 +54,7 @@ public abstract class Core extends JavaPlugin implements Global {
     }
 
     public abstract String getPrefix();
+    public abstract String getPluginVersion();
     public abstract String getPluginName();
     public abstract String[] getPluginAuthors();
 

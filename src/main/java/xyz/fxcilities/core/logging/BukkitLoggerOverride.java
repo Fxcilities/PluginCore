@@ -6,7 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
-// Modifying bukkits plugin logger
+// Replace Bukkit's Logger
 public class BukkitLoggerOverride extends Logger {
 
     /**
