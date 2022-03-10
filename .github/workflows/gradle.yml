@@ -34,3 +34,9 @@ jobs:
     
     - name: Execute Gradle build
       run: ./gradlew build
+      
+    - name: Archive test report
+      uses: actions/upload-artifact@v2
+      with:
+        name: Fxcilities Plugin Core
+        path: build/reports/tests/test
