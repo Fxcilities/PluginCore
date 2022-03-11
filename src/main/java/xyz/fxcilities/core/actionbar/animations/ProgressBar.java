@@ -38,7 +38,7 @@ public class ProgressBar extends BukkitRunnable {
     @Override
     public void run() {
         ticked++;
-        if (ticked == maxDisplayTicks) {
+        if (ticked >= maxDisplayTicks) {
             this.cancel();
             return;
         }
