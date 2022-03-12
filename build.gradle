@@ -34,8 +34,20 @@ java {
 
 publishing {
     publications {
-        maven(MavenPublication) {
+        mavenJava(MavenPublication) {
+            artifactId = 'PluginCore'
             from components.java
+            pom {
+                name = 'PluginCore'
+                description = 'Fxcilities\' plugin core for spigot.'
+                developers {
+                    developer {
+                        id = 'fxcilities'
+                        name = 'Fxcilities'
+                        email = 'dev@fxcilities.xyz'
+                    }
+                }
+            }
         }
     }
 }
