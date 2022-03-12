@@ -24,10 +24,17 @@ dependencies {
     compileOnly 'me.clip:placeholderapi:2.11.1'
 }
 
-
 java {
     withSourcesJar()
     withJavadocJar()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+        }
+    }
 }
 
 processResources {
