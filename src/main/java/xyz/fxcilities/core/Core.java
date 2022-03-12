@@ -9,6 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import xyz.fxcilities.core.command.ServerCommand;
 import xyz.fxcilities.core.logging.CustomLogger;
 
+import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
@@ -63,13 +64,16 @@ public abstract class Core extends JavaPlugin implements Global {
     public abstract void onPluginEnable();
 
     public FileConfiguration loadConfig(String fileName) {
+        Checks.nonNull(fileName, "The fileName argument");
+
+        FileConfiguration config = YamlConfiguration.loadConfiguration(new File(getDataFolder(), fileName));
         InputStream stream = getResource(fileName);
 
-        Checks.nonNull(fileName, "The fileName argument");
         Checks.check(stream == null, "Failed to open a InputStream from the argument fileName");
 
-        FileConfiguration config = YamlConfiguration.loadConfiguration(new InputStreamReader(stream, Charsets.UTF_8));
+        config.setDefaults(YamlConfiguration.loadConfiguration(new InputStreamReader(stream, Charsets.UTF_8)));
         config.options().copyDefaults(true);
+
         return config;
     }
 
