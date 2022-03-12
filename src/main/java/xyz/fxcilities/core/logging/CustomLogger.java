@@ -9,7 +9,7 @@ public class CustomLogger {
     private Core plugin;
 
     public CustomLogger(Core plugin, Logger logger) {
-        this.logger = (BukkitLoggerOverride) logger;
+        this.logger = new BukkitLoggerOverride(plugin); // (BukkitLoggerOverride) logger;
         this.plugin = plugin;
     }
 
