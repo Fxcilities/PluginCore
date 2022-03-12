@@ -1,7 +1,5 @@
 package xyz.fxcilities.core.collections.expiringmap.internal;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -21,7 +19,7 @@ public class NamedThreadFactory implements ThreadFactory {
     }
 
     @Override
-    public Thread newThread(@NotNull Runnable r) {
+    public Thread newThread(Runnable r) {
         Thread thread = new Thread(r, String.format(nameFormat, threadNumber.getAndIncrement()));
         thread.setDaemon(true);
         return thread;

@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'com.github.Fxcilities'
-version = '0.1'
+version = '1.0'
 
 repositories {
     mavenCentral()
@@ -22,8 +22,6 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.jetbrains:annotations:20.1.0'
-    implementation 'org.jetbrains:annotations:20.1.0'
     compileOnly 'org.spigotmc:spigot-api:1.18.1-R0.1-SNAPSHOT'
     compileOnly 'me.clip:placeholderapi:2.11.1'
 }

@@ -2,8 +2,6 @@ package xyz.fxcilities.core.placeholders;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.OfflinePlayer;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import xyz.fxcilities.core.Core;
 
 public class PAPIExpansion extends PlaceholderExpansion {
@@ -14,22 +12,22 @@ public class PAPIExpansion extends PlaceholderExpansion {
     }
 
     @Override
-    public @NotNull String getIdentifier() {
+    public String getIdentifier() {
         return Core.getInstance().getPluginName();
     }
 
     @Override
-    public @NotNull String getAuthor() {
+    public String getAuthor() {
         return Core.getInstance().getPluginAuthors()[0];
     }
 
     @Override
-    public @NotNull String getVersion() {
+    public String getVersion() {
         return Core.getInstance().getPluginVersion();
     }
 
     @Override
-    public @Nullable String onRequest(OfflinePlayer player, @NotNull String params) {
+    public String onRequest(OfflinePlayer player, String params) {
         return manager.onRequest(player, params);
     }
 }
