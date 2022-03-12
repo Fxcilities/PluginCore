@@ -4,6 +4,9 @@ apply plugin: 'maven-publish'
 group = 'com.github.Fxcilities'
 version = '1.0-alpha'
 
+sourceCompatibility = 16
+targetCompatibility = 16
+
 repositories {
     mavenCentral()
     maven {
