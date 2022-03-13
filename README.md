@@ -52,6 +52,9 @@ public final class MyPlugin extends Core {
 
     public MyCommand() {
         super("hello", "says hello world", "/hello", true, Arrays.asList("helloworld", "world")); // label, description, usage, playerOnly, aliases
+        
+        // Optional
+        setCooldownDuration(5, TimeUnit.SECONDS); // Five second cooldown
     }
 
     @Override
