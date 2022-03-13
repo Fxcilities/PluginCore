@@ -64,7 +64,7 @@ public abstract class ServerCommand extends BukkitCommand {
             long diffInMillies = new Date(System.currentTimeMillis()).getTime() - cooldownMap.getOrDefault(player.getUniqueId(), new Date(System.currentTimeMillis())).getTime();
             long difference = cooldownTimeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
 
-            if (difference <= cooldownDuration) {
+            if (difference >= cooldownDuration) {
                 return returnSay(true, "&cYou are on a cooldown! You may run this command again in &l" + difference + formattedTimeUnit(cooldownTimeUnit));
             }
             cooldownMap.put(player.getUniqueId(), new Date(System.currentTimeMillis()));

@@ -67,6 +67,7 @@ public abstract class Core extends JavaPlugin implements Global {
         Checks.nonNull(fileName, "The fileName argument");
 
         FileConfiguration config = YamlConfiguration.loadConfiguration(new File(getDataFolder(), fileName));
+        saveResource(fileName, false);
         InputStream stream = getResource(fileName);
 
         Checks.check(stream == null, "Failed to open a InputStream from the argument fileName");
