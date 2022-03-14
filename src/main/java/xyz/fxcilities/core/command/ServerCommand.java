@@ -7,10 +7,7 @@ import xyz.fxcilities.core.Core;
 import xyz.fxcilities.core.collections.expiringmap.ExpiringMap;
 import xyz.fxcilities.core.logging.Chat;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 
@@ -19,6 +16,8 @@ public abstract class ServerCommand extends BukkitCommand {
     private final boolean playerOnly;
     protected CommandSender sender;
     protected String[] args;
+
+    public List<ServerSubCommand> subCommands = new ArrayList<>();
 
     private long cooldownDuration = 30;
     private TimeUnit cooldownTimeUnit = TimeUnit.SECONDS;
@@ -30,7 +29,6 @@ public abstract class ServerCommand extends BukkitCommand {
     public ServerCommand(String label, String description, String usage, boolean playerOnly, final List<String> aliases) {
         super(label, description, usage, aliases);
         this.playerOnly = playerOnly;
-
         Core.getInstance().commands.add(this);
     }
 
@@ -41,6 +39,11 @@ public abstract class ServerCommand extends BukkitCommand {
     public ServerCommand(String label) {
         this(label, false);
     }
+
+    public void registerSub(ServerSubCommand subCommand) {
+        this.subCommands.add(subCommand);
+    }
+
 
     public abstract void onCommand();
 
@@ -68,6 +71,13 @@ public abstract class ServerCommand extends BukkitCommand {
                 return returnSay(true, "&cYou are on a cooldown! You may run this command again in &l" + difference + formattedTimeUnit(cooldownTimeUnit));
             }
             cooldownMap.put(player.getUniqueId(), new Date(System.currentTimeMillis()));
+        }
+
+        for (ServerSubCommand subCommand : this.subCommands) {
+            if (subCommand.label.equalsIgnoreCase(args[0])) {
+                subCommand.onCommand();
+                return true;
+            }
         }
 
         onCommand();
