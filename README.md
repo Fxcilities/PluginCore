@@ -3,6 +3,38 @@
   [![](https://img.shields.io/github/workflow/status/Fxcilities/PluginCore/Java%20CI%20with%20Gradle)](https://github.com/Fxcilities/PluginCore/actions)
 
   A core for all my spigot plugins
+  
+  ## Getting started
+  
+  ### If you use gradle, add this.
+  ```gradle
+repositories {
+      maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+      implementation 'com.github.Fxcilities:PluginCore:VERSION'
+}
+```
+  ### If you use maven, add this.
+  
+```xml
+	<repositories>
+		<repository>
+		    <id>jitpack.io</id>
+		    <url>https://jitpack.io</url>
+		</repository>
+	</repositories>
+  
+	<dependency>
+	    <groupId>com.github.Fxcilities</groupId>
+	    <artifactId>PluginCore</artifactId>
+	    <version>VERSION</version>
+	</dependency>
+```
+
+  ### If you use a dependency manager not listed, check the [https://jitpack.io/#Fxcilities/PluginCore](jitpack) for more examples.
+  ### NOTE: Make sure to shadow the PluginCore dependency into your plugin build.
 
   ## Examples
 
@@ -52,6 +84,9 @@ public final class MyPlugin extends Core {
 
     public MyCommand() {
         super("hello", "says hello world", "/hello", true, Arrays.asList("helloworld", "world")); // label, description, usage, playerOnly, aliases
+        
+        // Optional
+        setCooldownDuration(5, TimeUnit.SECONDS); // Five second cooldown
     }
 
     @Override
