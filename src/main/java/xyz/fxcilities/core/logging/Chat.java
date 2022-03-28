@@ -38,6 +38,7 @@ public class Chat {
     /**
      * Sends a message to everyone online with a certainty permission
      * @param permission The permission string to filter out
+     * @param showPrefix If the prefix should be sent in the message
      * @param text Message to be sent.
      */
     public static void say(String permission, boolean showPrefix, String text) {
@@ -56,6 +57,11 @@ public class Chat {
         }
     }
 
+    /**
+     * Sends a message to everyone online with a certainty permission
+     * @param permission The permission string to filter out
+     * @param text Message to be sent.
+     */
     public static void say(String permission, String text) {
         say(permission, true, text);
     }

@@ -97,7 +97,7 @@ public abstract class ServerCommand extends BukkitCommand {
     }
 
     private String addPrefix(String message) {
-        return message.replaceAll("\\{PREFIX}", Core.getInstance().getPrefix());
+        return message.replace("{PREFIX}", Core.getInstance().getPrefix());
     }
 
     @Override
@@ -111,13 +111,15 @@ public abstract class ServerCommand extends BukkitCommand {
         if (isPlayer()) {
             Player player = (Player) this.sender;
 
-            long diffInMillies = new Date(System.currentTimeMillis()).getTime() - cooldownMap.getOrDefault(player.getUniqueId(), new Date(System.currentTimeMillis())).getTime();
-            long difference = cooldownTimeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
+            if (cooldownMap.containsKey(player.getUniqueId())) {
+                long diffInMillies = new Date(System.currentTimeMillis()).getTime() - cooldownMap.get(player.getUniqueId()).getTime();
+                long difference = cooldownTimeUnit.convert(diffInMillies, cooldownTimeUnit);
 
-            if (difference >= cooldownDuration) {
-                String remainingTime = difference + formattedTimeUnit(cooldownTimeUnit);
-                return returnSay(false, addPrefix(Core.instance.onCooldownMessage)
-                        .replaceAll("\\{TIME}", remainingTime));
+                if (difference >= cooldownDuration) {
+                    String remainingTime = difference + formattedTimeUnit(cooldownTimeUnit);
+                    return returnSay(false, addPrefix(Core.instance.onCooldownMessage)
+                            .replace("{TIME}", remainingTime));
+                }
             }
             cooldownMap.put(player.getUniqueId(), new Date(System.currentTimeMillis()));
         }
