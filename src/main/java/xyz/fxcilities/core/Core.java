@@ -94,8 +94,6 @@ public abstract class Core extends JavaPlugin implements Global {
             commandMap.register(command.getLabel(), command);
             console.print(true, "Registered command /" + command.getLabel());
         }
-
-        console.print(true, getPluginName() + " &fis running &c" + VERSION);
     }
 
     @Override
