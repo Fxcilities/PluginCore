@@ -60,7 +60,7 @@ public class ProgressBar extends BukkitRunnable {
 
         int progress = maxBarTicks - ticked;
 
-        String bar = IntStream.range(0, 15 - progress)
+        String bar = IntStream.range(0, progress)
                 .mapToObj(i2 -> middle)
                 .collect(Collectors.joining());
 
