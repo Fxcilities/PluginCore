@@ -8,7 +8,7 @@ import java.util.List;
  * <pre>
  * {@code
  * public class MySubCommand extends ServerSubCommand {
- *     public MySubCommand() {
+ *     public MySubCommand(ServerCommand parent) {
  *         super(parent, "world", "my fun subcommand", "/hello world", List.of("planet", "earth"));
  *     }
  *
