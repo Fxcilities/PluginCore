@@ -23,7 +23,7 @@ public class ProgressBar extends BukkitRunnable {
     private final int maxBarTicks;
     private final int maxDisplayTicks;
 
-    private int ticked = 0;
+    private int ticked = 0, displayTicks = 0;
     private final String begin, middle, end;
 
     /**
@@ -52,16 +52,19 @@ public class ProgressBar extends BukkitRunnable {
      */
     @Override
     public void run() {
-        ticked++;
-        if (ticked >= maxDisplayTicks) {
+        displayTicks++;
+
+        if (displayTicks >= maxDisplayTicks) {
             this.cancel();
             return;
         }
 
-        int progress = maxBarTicks - ticked;
+        if (ticked < maxBarTicks) {
+            ticked++;
+        }
 
-        String bar = IntStream.range(0, 15 - progress)
-                .mapToObj(i2 -> middle)
+        String bar = IntStream.range(0, ticked)
+                .mapToObj(i -> middle)
                 .collect(Collectors.joining());
 
         actionBar.setBar(begin + bar + end);
