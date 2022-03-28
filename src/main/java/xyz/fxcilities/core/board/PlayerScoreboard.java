@@ -10,7 +10,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Scoreboard wrapper
  * @author https://www.spigotmc.org/threads/scoreboard-api-1-8.160095/
+ *
+ * Example:
+ * <pre>
+ * {@code
+ * PlayerScoreboard board = new ScoreboardWrapper("&aServer Name");
+ * board.addLine("&bRank: &c&lOwner");
+ * board.addLine("Name: " + player.getName());
+ * board.addBlankSpace(); // Blank line
+ * board.addLine("play.server.com");
+ *
+ * player.setScoreboard(board.getScoreboard());
+ * }
+ * </pre>
  */
 public class PlayerScoreboard {
     public static final int MAX_LINES = 16;

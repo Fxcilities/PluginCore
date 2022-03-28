@@ -8,7 +8,7 @@ A core for all my spigot plugins
 ## Getting started
 
 ### If you use gradle, add this.
-  ```gradle
+```gradle
 repositories {
       maven { url 'https://jitpack.io' }
 }
@@ -44,7 +44,7 @@ dependencies {
 ### Basic plugin with a command
 
 **MyPlugin.java**
-  ```java
+```java
 public final class MyPlugin extends Core {
 
   @Override
@@ -80,16 +80,16 @@ public final class MyPlugin extends Core {
     return new String[]{"Mario", "Luigi"};
   }
 }
-  ```
+```
 **MyCommand.java**
-  ```java
+```java
   public class MyCommand extends ServerCommand {
 
   public MyCommand() {
     super("hello", "says hello world", "/hello", true, Arrays.asList("helloworld", "world")); // label, description, usage, playerOnly, aliases
 
     // Optional
-    setCooldownDuration(5, TimeUnit.SECONDS); // Five second cooldown
+    setCooldownDuration(5, TimeUnit.SECONDS); // Five second cooldown, this line is optional.
   }
 
   @Override

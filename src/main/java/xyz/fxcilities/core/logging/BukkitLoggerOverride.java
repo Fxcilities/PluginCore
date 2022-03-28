@@ -3,10 +3,12 @@ package xyz.fxcilities.core.logging;
 import org.bukkit.plugin.Plugin;
 
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
-// Replace Bukkit's Logger
+/**
+ * A replacement for Bukkit's Logger to remove their default formatting
+ * @see org.bukkit.plugin.PluginLogger
+ */
 public class BukkitLoggerOverride extends Logger {
 
     /**
@@ -20,11 +22,4 @@ public class BukkitLoggerOverride extends Logger {
         setParent(context.getServer().getLogger());
         setLevel(Level.ALL);
     }
-
-    @Override
-    public void log(LogRecord logRecord) {
-        logRecord.setMessage(logRecord.getMessage());
-        super.log(logRecord);
-    }
-
 }

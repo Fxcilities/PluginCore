@@ -16,18 +16,66 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 /**
- * TODO: Implement https://github.com/thekeenant/tabbed
+ * The base class of this project
+ * To create a plugin, instead of extending {@link JavaPlugin}, extend this and import all abstract classes
+ *
+ * Example:
+ * <pre>
+ * {@code
+ * public final class MyPlugin extends Core {
+ *
+ *   @Override
+ *   public void onPluginEnable() {
+ *     console.print("Hello world!");
+ *
+ *     // Initialize commands
+ *     new MyCommand();
+ *   }
+ *
+ *   @Override
+ *   public void onPluginDisable() {
+ *     console.print("Goodbye world!");
+ *   }
+ *
+ *   @Override
+ *   public String getPrefix() {
+ *     return "&bMyPlugin > &f";
+ *   }
+ *
+ *   @Override
+ *   public String getPluginVersion() {
+ *     return "v1.0";
+ *   }
+ *
+ *   @Override
+ *   public String getPluginName() {
+ *     return "MyPlugin";
+ *   }
+ *
+ *   @Override
+ *   public String[] getPluginAuthors() {
+ *     return new String[]{"Mario", "Luigi"};
+ *   }
+ * }
+ * }
+ * </pre>
+ *
+ * Source at: https://github.com/Fxcilities/PluginCored
  */
 public abstract class Core extends JavaPlugin implements Global {
 
     public static CustomLogger console;
     public static Core instance;
 
+    public String notAPlayerMessage = "{PREFIX}&c&lYou must be a player to run this command!";
+    public String onCooldownMessage = "{PREFIX}&cYou are on a cooldown! You may run this command again in &l{TIME}";
+
+
     public ArrayList<ServerCommand> commands = new ArrayList<>();
 
     @Override
     public void onEnable() {
-        console = new CustomLogger(this, getLogger());
+        console = new CustomLogger(this);
         instance = this;
 
         onPluginEnable();
@@ -62,6 +110,14 @@ public abstract class Core extends JavaPlugin implements Global {
 
     public abstract void onPluginDisable();
     public abstract void onPluginEnable();
+
+    public void setNotAPlayerMessage(String message) {
+        this.notAPlayerMessage = message;
+    }
+
+    public void setOnCooldownMessage(String message) {
+        this.onCooldownMessage = message;
+    }
 
     public FileConfiguration loadConfig(String fileName) {
         Checks.nonNull(fileName, "The fileName argument");

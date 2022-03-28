@@ -1,9 +1,41 @@
 package xyz.fxcilities.core.placeholders;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 import xyz.fxcilities.core.Core;
+import xyz.fxcilities.core.placeholders.handlers.ExtensionHandler;
 
+/**
+ * Manages a PlaceholderAPI extension
+ * Example:
+ * <pre>
+ * {@code
+ * new PAPIExpansion(new ExtensionHandler() {
+ *
+ *     @Override
+ *     public String getPrefix() {
+ *         return "example";
+ *     }
+ *
+ *     @Override
+ *     public String onRequest(Player player, String placeholder) {
+ *         // Registers two placeholders (%example_uuid%, and %example_name%)
+ *         String result = null;
+ *         switch (placeholder) {
+ *             case "uuid":
+ *                 result = player.getUniqueId().toString();
+ *                 break;
+ *             case "name":
+ *                 result = player.getName();
+ *                 break;
+ *         }
+ *         return result;
+ *     }
+ * });
+ * }
+ * </pre>
+ * @see PlaceholderExpansion
+ */
 public class PAPIExpansion extends PlaceholderExpansion {
     private final ExtensionHandler manager;
 
@@ -13,7 +45,7 @@ public class PAPIExpansion extends PlaceholderExpansion {
 
     @Override
     public String getIdentifier() {
-        return Core.getInstance().getPluginName();
+        return manager.getPrefix();
     }
 
     @Override
@@ -26,8 +58,9 @@ public class PAPIExpansion extends PlaceholderExpansion {
         return Core.getInstance().getPluginVersion();
     }
 
+    /* Online */
     @Override
-    public String onRequest(OfflinePlayer player, String params) {
+    public String onPlaceholderRequest(Player player, String params) {
         return manager.onRequest(player, params);
     }
 }

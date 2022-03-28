@@ -2,18 +2,29 @@ package xyz.fxcilities.core.logging;
 
 import xyz.fxcilities.core.Core;
 
-import java.util.logging.Logger;
-
+/**
+ * A custom logger
+ * @see Core#console
+ */
 public class CustomLogger {
     private BukkitLoggerOverride logger;
     private Core plugin;
 
-    public CustomLogger(Core plugin, Logger logger) {
-        this.logger = new BukkitLoggerOverride(plugin); // (BukkitLoggerOverride) logger;
+    /**
+     * Creates a custom console logger
+     * @param plugin The core plugin
+     * @see BukkitLoggerOverride
+     */
+    public CustomLogger(Core plugin) {
+        this.logger = new BukkitLoggerOverride(plugin);
         this.plugin = plugin;
     }
 
-    /* Logging Methods */
+    /**
+     * Prints a message to console
+     * @param prefix If the prefix should be sent before the text
+     * @param text The text to log
+     */
     public void print(boolean prefix, String text) {
         StringBuilder logRecord = new StringBuilder();
         if (prefix) {
@@ -27,6 +38,9 @@ public class CustomLogger {
         print(false, text);
     }
 
+    /**
+     * @return The Core plugin the logger belongs to
+     */
     public Core getPlugin() {
         return this.plugin;
     }
