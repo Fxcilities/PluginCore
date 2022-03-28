@@ -122,10 +122,12 @@ public abstract class ServerCommand extends BukkitCommand {
             cooldownMap.put(player.getUniqueId(), new Date(System.currentTimeMillis()));
         }
 
-        for (ServerSubCommand subCommand : this.subCommands) {
-            if (subCommand.label.equalsIgnoreCase(args[0]) || subCommand.aliases.contains(args[0].toLowerCase())) {
-                subCommand.onCommand();
-                return true;
+        if (args.length >= 1) {
+            for (ServerSubCommand subCommand : this.subCommands) {
+                if (subCommand.label.equalsIgnoreCase(args[0]) || subCommand.aliases.contains(args[0].toLowerCase())) {
+                    subCommand.onCommand();
+                    return true;
+                }
             }
         }
 
@@ -148,6 +150,10 @@ public abstract class ServerCommand extends BukkitCommand {
 
     protected final boolean isPlayer() {
         return this.sender instanceof Player;
+    }
+
+    public CommandSender getSender() {
+        return this.sender;
     }
 
     private boolean returnSay(boolean withPrefix, String message) {
