@@ -16,7 +16,7 @@ import java.util.stream.IntStream;
  * A progress bar with the paramaters:
  * {@code new ProgressBar(actionBar, 15, 20, "&f> ", "&c▮", "&f <")}
  * would look like:
- * > {@literal ▮}{@literal ▮}{@literal ▮}{@literal ▮}{@literal ▮}{@literal ▮} <
+ * > &#9646;&#9646;&#9646;&#9646;&#9646;&#9646; <
  */
 public class ProgressBar extends BukkitRunnable {
     private final PlayerActionBar actionBar;

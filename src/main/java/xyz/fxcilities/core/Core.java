@@ -103,13 +103,34 @@ public abstract class Core extends JavaPlugin implements Global {
         onPluginDisable();
     }
 
-    public abstract String getPrefix();
-    public abstract String getPluginVersion();
-    public abstract String getPluginName();
-    public abstract String[] getPluginAuthors();
-
-    public abstract void onPluginDisable();
+    /**
+     * A function called when the plugin is enabled
+     */
     public abstract void onPluginEnable();
+    /**
+     * A function called when the plugin is disabled
+     */
+    public abstract void onPluginDisable();
+
+    /**
+     * @return The prefix of the plugin
+     */
+    public abstract String getPrefix();
+
+    /**
+     * @return The version of the plugin
+     */
+    public abstract String getPluginVersion();
+
+    /**
+     * @return The name of the plugin
+     */
+    public abstract String getPluginName();
+
+    /**
+     * @return An array of authors of the plugin
+     */
+    public abstract String[] getPluginAuthors();
 
     public void setNotAPlayerMessage(String message) {
         this.notAPlayerMessage = message;
