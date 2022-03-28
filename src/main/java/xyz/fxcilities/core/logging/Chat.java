@@ -13,7 +13,7 @@ public class Chat {
 
     /**
      * Formats a message
-     * @param text String to format with chat colour codes (Replaces & with the special character)
+     * @param text String to format with chat colour codes (Replaces {@literal &} with the special character)
      * @return The formatted string
      */
     public static String format(String text) {
