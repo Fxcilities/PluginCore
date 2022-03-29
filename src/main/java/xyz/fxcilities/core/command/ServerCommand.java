@@ -113,15 +113,15 @@ public abstract class ServerCommand extends BukkitCommand {
 
             if (cooldownMap.containsKey(player.getUniqueId())) {
                 long diffInMillies = new Date(System.currentTimeMillis()).getTime() - cooldownMap.get(player.getUniqueId()).getTime();
-                long difference = cooldownTimeUnit.convert(diffInMillies, cooldownTimeUnit);
-
+                long difference = TimeUnit.MILLISECONDS.convert(diffInMillies, cooldownTimeUnit);
                 if (difference >= cooldownDuration) {
                     String remainingTime = difference + formattedTimeUnit(cooldownTimeUnit);
                     return returnSay(false, addPrefix(Core.instance.onCooldownMessage)
                             .replace("{TIME}", remainingTime));
                 }
+            } else {
+                cooldownMap.put(player.getUniqueId(), new Date(System.currentTimeMillis()));
             }
-            cooldownMap.put(player.getUniqueId(), new Date(System.currentTimeMillis()));
         }
 
         if (args.length >= 1) {
