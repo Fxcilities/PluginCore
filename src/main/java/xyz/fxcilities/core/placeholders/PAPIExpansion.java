@@ -39,6 +39,10 @@ import xyz.fxcilities.core.placeholders.handlers.ExtensionHandler;
 public class PAPIExpansion extends PlaceholderExpansion {
     private final ExtensionHandler manager;
 
+    /**
+     * Register and initialize PAPI extension
+     * @param manager The extension handler. Can be created with a lambda or {@code new ExtensionHandler() { ... }}
+     */
     public PAPIExpansion(ExtensionHandler manager) {
         this.manager = manager;
     }
@@ -58,7 +62,6 @@ public class PAPIExpansion extends PlaceholderExpansion {
         return Core.getInstance().getPluginVersion();
     }
 
-    /* Online */
     @Override
     public String onPlaceholderRequest(Player player, String params) {
         return manager.onRequest(player, params);

@@ -47,14 +47,14 @@ public abstract class ServerSubCommand {
     public abstract void onCommand();
 
     /**
-     * {@link ServerCommand#say(boolean, String)}
+     * @see ServerCommand#say(boolean, String)
      */
     protected void say(boolean withPrefix, String message) {
         parent.say(withPrefix, message);
     }
 
     /**
-     * {@link ServerCommand#say(String)}
+     * @see ServerCommand#say(String)
      */
     protected void say(String message) {
         parent.say(message);
