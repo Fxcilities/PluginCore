@@ -38,8 +38,8 @@ public class Visualizer extends BukkitRunnable {
      */
     public Visualizer(BoundingBox bb, ParticleBuilder particleBuilder, World world) {
         this.bb = bb;
-        this.particleBuilder = particleBuilder;
         this.world = world;
+        this.particleBuilder = particleBuilder;
     }
 
     /**
@@ -47,14 +47,44 @@ public class Visualizer extends BukkitRunnable {
      */
     @Override
     public void run() {
-        wireframe(new Location(world, bb.getMinX(), bb.getMinY(), bb.getMinZ()), new Location(world, bb.getMaxX(), bb.getMinY(), bb.getMaxZ()));
-        wireframe(new Location(world, bb.getMaxX(), bb.getMaxY(), bb.getMaxZ()), new Location(world, bb.getMinX(), bb.getMaxY(), bb.getMinZ()));
+        for (int[][] coords : 
+            new int[][][] {
+                // Below are all the coordinates for the following wireframe calls. 
+                // First Location Coords                          Second Location Coords
+                { { bb.getMinX(), bb.getMinY(), bb.getMinZ() },  { bb.getMaxX(), bb.getMinY(), bb.getMaxZ() } }, 
+                { { bb.getMaxX(), bb.getMaxY(), bb.getMaxZ() },  { bb.getMinX(), bb.getMaxY(), bb.getMinZ() } },
+                { { bb.getMaxX(), bb.getMaxY(), bb.getMinZ() },  { bb.getMinX(), bb.getMinY(), bb.getMinZ() } },
+                { { bb.getMinX(), bb.getMaxY(), bb.getMinZ() },  { bb.getMinX(), bb.getMinY(), bb.getMaxZ() } },
+                { { bb.getMinX(), bb.getMaxY(), bb.getMaxZ() },  { bb.getMaxX(), bb.getMinY(), bb.getMaxZ() } },
+                { { bb.getMaxX(), bb.getMaxY(), bb.getMinZ() },  { bb.getMaxX(), bb.getMinY(), bb.getMaxZ() } } 
+            }
+        ) { 
+            int[] locOne = coords[0]; // I don't like this but it's more efficient - Pie 
+            int[] locTwo = coords[1]; 
+            wireframe(new BoundingBox(locOne[0], locOne[1], locOne[2], locTwo[0], locTwo[1], locTwo[2])); 
+        } 
 
-        wireframe(new Location(world, bb.getMaxX(), bb.getMaxY(), bb.getMinZ()), new Location(world, bb.getMinX(), bb.getMinY(), bb.getMinZ()));
-        wireframe(new Location(world, bb.getMinX(), bb.getMaxY(), bb.getMinZ()), new Location(world, bb.getMinX(), bb.getMinY(), bb.getMaxZ()));
+        // Getting Better:
+        // for (Location[] locations : 
+        //     new Location[][] { 
+        //         { new Location(world, bb.getMinX(), bb.getMinY(), bb.getMinZ()), new Location(world, bb.getMaxX(), bb.getMinY(), bb.getMaxZ()) }, 
+        //         { new Location(world, bb.getMaxX(), bb.getMaxY(), bb.getMaxZ()), new Location(world, bb.getMinX(), bb.getMaxY(), bb.getMinZ()) },
+        //         { new Location(world, bb.getMaxX(), bb.getMaxY(), bb.getMinZ()), new Location(world, bb.getMinX(), bb.getMinY(), bb.getMinZ()) }.
+        //         { new Location(world, bb.getMinX(), bb.getMaxY(), bb.getMinZ()), new Location(world, bb.getMinX(), bb.getMinY(), bb.getMaxZ()) },
+        //         { new Location(world, bb.getMinX(), bb.getMaxY(), bb.getMaxZ()), new Location(world, bb.getMaxX(), bb.getMinY(), bb.getMaxZ()) },
+        //         { new Location(world, bb.getMaxX(), bb.getMaxY(), bb.getMinZ()), new Location(world, bb.getMaxX(), bb.getMinY(), bb.getMaxZ()) } 
+        //     }
+        // ) { 
+        //     wireframe(locations[0], locations[1]); 
+        // } 
 
-        wireframe(new Location(world, bb.getMinX(), bb.getMaxY(), bb.getMaxZ()), new Location(world, bb.getMaxX(), bb.getMinY(), bb.getMaxZ()));
-        wireframe(new Location(world, bb.getMaxX(), bb.getMaxY(), bb.getMinZ()), new Location(world, bb.getMaxX(), bb.getMinY(), bb.getMaxZ()));
+        // OG:
+        // wireframe(new Location(world, bb.getMinX(), bb.getMinY(), bb.getMinZ()), new Location(world, bb.getMaxX(), bb.getMinY(), bb.getMaxZ()));
+        // wireframe(new Location(world, bb.getMaxX(), bb.getMaxY(), bb.getMaxZ()), new Location(world, bb.getMinX(), bb.getMaxY(), bb.getMinZ()));
+        // wireframe(new Location(world, bb.getMaxX(), bb.getMaxY(), bb.getMinZ()), new Location(world, bb.getMinX(), bb.getMinY(), bb.getMinZ()));
+        // wireframe(new Location(world, bb.getMinX(), bb.getMaxY(), bb.getMinZ()), new Location(world, bb.getMinX(), bb.getMinY(), bb.getMaxZ()));
+        // wireframe(new Location(world, bb.getMinX(), bb.getMaxY(), bb.getMaxZ()), new Location(world, bb.getMaxX(), bb.getMinY(), bb.getMaxZ()));
+        // wireframe(new Location(world, bb.getMaxX(), bb.getMaxY(), bb.getMinZ()), new Location(world, bb.getMaxX(), bb.getMinY(), bb.getMaxZ()));
     }
 
     /**
@@ -63,15 +93,16 @@ public class Visualizer extends BukkitRunnable {
      * @param start The starting location
      * @param end The destination location
      */
-    private void wireframe(Location start, Location end) {
-        BoundingBox box = new BoundingBox(start.getX(), start.getY(),  start.getZ(), end.getX(), end.getY(), end.getZ());
-        for (double x = box.getMinX(); x <= box.getMaxX(); x++) for (double y = box.getMinY(); y <= box.getMaxY(); y++) for (double z = box.getMinZ(); z <= box.getMaxZ(); z++) {
+    private void wireframe(BoundingBox box) {
+        for (int x = box.getMinX(); x <= box.getMaxX(); x++) for 
+            (int y = box.getMinY(); y <= box.getMaxY(); y++) for 
+            (int z = box.getMinZ(); z <= box.getMaxZ(); z++) {
+
             Location loc = new Location(world, x, y, z);
-            if (particleBuilder.shouldUseData()) {
+            if (particleBuilder.shouldUseData()) 
                 world.spawnParticle(particleBuilder.particle, loc, 0, particleBuilder.data);
-            } else {
+            else 
                 world.spawnParticle(particleBuilder.particle, loc, 0);
-            }
         }
     }
 }
