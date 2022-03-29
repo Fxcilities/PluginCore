@@ -47,8 +47,8 @@ public class Visualizer extends BukkitRunnable {
      */
     @Override
     public void run() {
-        for (int[][] coords : 
-            new int[][][] {
+        for (double[][] coords : 
+            new double[][][] {
                 // Below are all the coordinates for the following wireframe calls. 
                 // First Location Coords                          Second Location Coords
                 { { bb.getMinX(), bb.getMinY(), bb.getMinZ() },  { bb.getMaxX(), bb.getMinY(), bb.getMaxZ() } }, 
@@ -59,8 +59,8 @@ public class Visualizer extends BukkitRunnable {
                 { { bb.getMaxX(), bb.getMaxY(), bb.getMinZ() },  { bb.getMaxX(), bb.getMinY(), bb.getMaxZ() } } 
             }
         ) { 
-            int[] locOne = coords[0]; // I don't like this but it's more efficient - Pie 
-            int[] locTwo = coords[1]; 
+            double[] locOne = coords[0]; // I don't like this but it's more efficient - Pie 
+            double[] locTwo = coords[1]; 
             wireframe(new BoundingBox(locOne[0], locOne[1], locOne[2], locTwo[0], locTwo[1], locTwo[2])); 
         } 
 
@@ -94,9 +94,9 @@ public class Visualizer extends BukkitRunnable {
      * @param end The destination location
      */
     private void wireframe(BoundingBox box) {
-        for (int x = box.getMinX(); x <= box.getMaxX(); x++) for 
-            (int y = box.getMinY(); y <= box.getMaxY(); y++) for 
-            (int z = box.getMinZ(); z <= box.getMaxZ(); z++) {
+        for (double x = box.getMinX(); x <= box.getMaxX(); x++) for 
+            (double y = box.getMinY(); y <= box.getMaxY(); y++) for 
+            (double z = box.getMinZ(); z <= box.getMaxZ(); z++) {
 
             Location loc = new Location(world, x, y, z);
             if (particleBuilder.shouldUseData()) 
