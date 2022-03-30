@@ -7,6 +7,7 @@ import org.bukkit.util.BoundingBox;
 
 /**
  * @author Fxcilities
+ * @author Mrmagicpie
  * Visualize a BoundingBox with particles
  *
  * Example:
@@ -59,39 +60,16 @@ public class Visualizer extends BukkitRunnable {
                 { { bb.getMaxX(), bb.getMaxY(), bb.getMinZ() },  { bb.getMaxX(), bb.getMinY(), bb.getMaxZ() } } 
             }
         ) { 
-            double[] locOne = coords[0]; // I don't like this but it's more efficient - Pie 
+            double[] locOne = coords[0]; // I don't like this but it's more efficient - Pie
             double[] locTwo = coords[1]; 
             wireframe(new BoundingBox(locOne[0], locOne[1], locOne[2], locTwo[0], locTwo[1], locTwo[2])); 
-        } 
-
-        // Getting Better:
-        // for (Location[] locations : 
-        //     new Location[][] { 
-        //         { new Location(world, bb.getMinX(), bb.getMinY(), bb.getMinZ()), new Location(world, bb.getMaxX(), bb.getMinY(), bb.getMaxZ()) }, 
-        //         { new Location(world, bb.getMaxX(), bb.getMaxY(), bb.getMaxZ()), new Location(world, bb.getMinX(), bb.getMaxY(), bb.getMinZ()) },
-        //         { new Location(world, bb.getMaxX(), bb.getMaxY(), bb.getMinZ()), new Location(world, bb.getMinX(), bb.getMinY(), bb.getMinZ()) }.
-        //         { new Location(world, bb.getMinX(), bb.getMaxY(), bb.getMinZ()), new Location(world, bb.getMinX(), bb.getMinY(), bb.getMaxZ()) },
-        //         { new Location(world, bb.getMinX(), bb.getMaxY(), bb.getMaxZ()), new Location(world, bb.getMaxX(), bb.getMinY(), bb.getMaxZ()) },
-        //         { new Location(world, bb.getMaxX(), bb.getMaxY(), bb.getMinZ()), new Location(world, bb.getMaxX(), bb.getMinY(), bb.getMaxZ()) } 
-        //     }
-        // ) { 
-        //     wireframe(locations[0], locations[1]); 
-        // } 
-
-        // OG:
-        // wireframe(new Location(world, bb.getMinX(), bb.getMinY(), bb.getMinZ()), new Location(world, bb.getMaxX(), bb.getMinY(), bb.getMaxZ()));
-        // wireframe(new Location(world, bb.getMaxX(), bb.getMaxY(), bb.getMaxZ()), new Location(world, bb.getMinX(), bb.getMaxY(), bb.getMinZ()));
-        // wireframe(new Location(world, bb.getMaxX(), bb.getMaxY(), bb.getMinZ()), new Location(world, bb.getMinX(), bb.getMinY(), bb.getMinZ()));
-        // wireframe(new Location(world, bb.getMinX(), bb.getMaxY(), bb.getMinZ()), new Location(world, bb.getMinX(), bb.getMinY(), bb.getMaxZ()));
-        // wireframe(new Location(world, bb.getMinX(), bb.getMaxY(), bb.getMaxZ()), new Location(world, bb.getMaxX(), bb.getMinY(), bb.getMaxZ()));
-        // wireframe(new Location(world, bb.getMaxX(), bb.getMaxY(), bb.getMinZ()), new Location(world, bb.getMaxX(), bb.getMinY(), bb.getMaxZ()));
+        }
     }
 
     /**
      * Simulates a wireframe between two corners with particles.
      *
-     * @param start The starting location
-     * @param end The destination location
+     * @param box the bounding box to be used for the wireframe
      */
     private void wireframe(BoundingBox box) {
         for (double x = box.getMinX(); x <= box.getMaxX(); x++) for 
