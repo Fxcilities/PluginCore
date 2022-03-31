@@ -47,38 +47,19 @@ public class Visualizer extends BukkitRunnable {
     public void run() {
         for (double[][] coords :
                 new double[][][] {
-                    // Below are all the coordinates for the following wireframe calls.
-                    // First Location Coords                          Second Location Coords
-                    {
-                        {bb.getMinX(), bb.getMinY(), bb.getMinZ()},
-                        {bb.getMaxX(), bb.getMinY(), bb.getMaxZ()}
-                    },
-                    {
-                        {bb.getMaxX(), bb.getMaxY(), bb.getMaxZ()},
-                        {bb.getMinX(), bb.getMaxY(), bb.getMinZ()}
-                    },
-                    {
-                        {bb.getMaxX(), bb.getMaxY(), bb.getMinZ()},
-                        {bb.getMinX(), bb.getMinY(), bb.getMinZ()}
-                    },
-                    {
-                        {bb.getMinX(), bb.getMaxY(), bb.getMinZ()},
-                        {bb.getMinX(), bb.getMinY(), bb.getMaxZ()}
-                    },
-                    {
-                        {bb.getMinX(), bb.getMaxY(), bb.getMaxZ()},
-                        {bb.getMaxX(), bb.getMinY(), bb.getMaxZ()}
-                    },
-                    {
-                        {bb.getMaxX(), bb.getMaxY(), bb.getMinZ()},
-                        {bb.getMaxX(), bb.getMinY(), bb.getMaxZ()}
-                    }
-                }) {
+                        // Below are all the coordinates for the following wireframe calls.
+                        // First Location Coords                          Second Location Coords
+                        { { bb.getMinX(), bb.getMinY(), bb.getMinZ() },  { bb.getMaxX(), bb.getMinY(), bb.getMaxZ() } },
+                        { { bb.getMaxX(), bb.getMaxY(), bb.getMaxZ() },  { bb.getMinX(), bb.getMaxY(), bb.getMinZ() } },
+                        { { bb.getMaxX(), bb.getMaxY(), bb.getMinZ() },  { bb.getMinX(), bb.getMinY(), bb.getMinZ() } },
+                        { { bb.getMinX(), bb.getMaxY(), bb.getMinZ() },  { bb.getMinX(), bb.getMinY(), bb.getMaxZ() } },
+                        { { bb.getMinX(), bb.getMaxY(), bb.getMaxZ() },  { bb.getMaxX(), bb.getMinY(), bb.getMaxZ() } },
+                        { { bb.getMaxX(), bb.getMaxY(), bb.getMinZ() },  { bb.getMaxX(), bb.getMinY(), bb.getMaxZ() } }
+                }
+        ) {
             double[] locOne = coords[0]; // I don't like this but it's more efficient - Pie
             double[] locTwo = coords[1];
-            wireframe(
-                    new BoundingBox(
-                            locOne[0], locOne[1], locOne[2], locTwo[0], locTwo[1], locTwo[2]));
+            wireframe(new BoundingBox(locOne[0], locOne[1], locOne[2], locTwo[0], locTwo[1], locTwo[2]));
         }
     }
 
