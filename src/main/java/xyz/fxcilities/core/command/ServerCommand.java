@@ -3,12 +3,14 @@ package xyz.fxcilities.core.command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
-
 import xyz.fxcilities.core.Core;
 import xyz.fxcilities.core.collections.expiringmap.ExpiringMap;
 import xyz.fxcilities.core.logging.Chat;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -45,7 +47,7 @@ public abstract class ServerCommand extends BukkitCommand {
     private long cooldownDuration = 30;
     private TimeUnit cooldownTimeUnit = TimeUnit.SECONDS;
 
-    protected ExpiringMap<UUID, Date> cooldownMap =
+    protected ExpiringMap<UUID, Long> cooldownMap =
             ExpiringMap.builder().expiration(cooldownDuration, cooldownTimeUnit).build();
 
     /**
@@ -114,24 +116,20 @@ public abstract class ServerCommand extends BukkitCommand {
             return returnSay(false, addPrefix(Core.instance.notAPlayerMessage));
         }
 
-        if (isPlayer()) {
+        if (cooldownDuration > 0 && isPlayer()) {
             Player player = (Player) this.sender;
 
-            if (cooldownMap.containsKey(player.getUniqueId())) {
-                long diffInMillies =
-                        new Date(System.currentTimeMillis()).getTime()
-                                - cooldownMap.get(player.getUniqueId()).getTime();
-                long difference = TimeUnit.MILLISECONDS.convert(diffInMillies, cooldownTimeUnit);
-                if (difference >= cooldownDuration) {
-                    String remainingTime = difference + formattedTimeUnit(cooldownTimeUnit);
-                    return returnSay(
-                            false,
-                            addPrefix(Core.instance.onCooldownMessage)
-                                    .replace("{TIME}", remainingTime));
-                }
-            } else {
-                cooldownMap.put(player.getUniqueId(), new Date(System.currentTimeMillis()));
+            long lastCommandRun = cooldownMap.getOrDefault(player.getUniqueId(), 0L);
+            long difference = cooldownTimeUnit.convert((System.currentTimeMillis() - lastCommandRun), TimeUnit.MILLISECONDS);
+            if (difference <= cooldownDuration) {
+                String remainingTime = (cooldownDuration - difference) + formattedTimeUnit(cooldownTimeUnit);
+                return returnSay(
+                        false,
+                        addPrefix(Core.instance.onCooldownMessage)
+                                .replace("{TIME}", remainingTime));
             }
+
+            cooldownMap.put(player.getUniqueId(), System.currentTimeMillis());
         }
 
         if (args.length >= 1) {
