@@ -37,7 +37,7 @@ dependencies {
 </dependencies>
 ```
 
-### If you use a dependency manager not listed, check the [https://jitpack.io/#Fxcilities/PluginCore](jitpack) for more examples.
+### If you use a dependency manager not listed, check the [jitpack](https://jitpack.io/#Fxcilities/PluginCore) for more examples.
 ### NOTE: Make sure to shadow the PluginCore dependency into your plugin build.
 
 ## Examples
