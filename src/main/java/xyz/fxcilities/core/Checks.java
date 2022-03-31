@@ -1,8 +1,9 @@
 package xyz.fxcilities.core;
 
+import java.util.NoSuchElementException;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.NoSuchElementException;
 
 /**
  * @author Fxcilities A better way of assertions
@@ -35,16 +36,14 @@ public class Checks {
     }
 
     /**
-     * @author Jonathan Halterman
-     * Taken from ExpiringMap
+     * @author Jonathan Halterman Taken from ExpiringMap
      */
     public static void state(boolean expression, String errorMessageFormat, Object... args) {
         if (!expression) throw new IllegalStateException(String.format(errorMessageFormat, args));
     }
 
     /**
-     * @author Jonathan Halterman
-     * Taken from ExpiringMap
+     * @author Jonathan Halterman Taken from ExpiringMap
      */
     public static void element(Object element, Object key) {
         if (element == null) throw new NoSuchElementException(key.toString());

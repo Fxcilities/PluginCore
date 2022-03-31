@@ -3,6 +3,7 @@ package xyz.fxcilities.core.command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
+
 import xyz.fxcilities.core.Core;
 import xyz.fxcilities.core.collections.expiringmap.ExpiringMap;
 import xyz.fxcilities.core.logging.Chat;
@@ -120,9 +121,12 @@ public abstract class ServerCommand extends BukkitCommand {
             Player player = (Player) this.sender;
 
             long lastCommandRun = cooldownMap.getOrDefault(player.getUniqueId(), 0L);
-            long difference = cooldownTimeUnit.convert((System.currentTimeMillis() - lastCommandRun), TimeUnit.MILLISECONDS);
+            long difference =
+                    cooldownTimeUnit.convert(
+                            (System.currentTimeMillis() - lastCommandRun), TimeUnit.MILLISECONDS);
             if (difference <= cooldownDuration) {
-                String remainingTime = (cooldownDuration - difference) + formattedTimeUnit(cooldownTimeUnit);
+                String remainingTime =
+                        (cooldownDuration - difference) + formattedTimeUnit(cooldownTimeUnit);
                 return returnSay(
                         false,
                         addPrefix(Core.instance.onCooldownMessage)
