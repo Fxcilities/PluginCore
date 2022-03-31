@@ -1,6 +1,11 @@
 package xyz.fxcilities.core;
 
 import com.google.common.base.Charsets;
+import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -9,19 +14,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 import xyz.fxcilities.core.command.ServerCommand;
 import xyz.fxcilities.core.logging.CustomLogger;
 
-import java.io.File;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-
 /**
- * The base class of this project
- * To create a plugin, instead of extending {@link JavaPlugin}, extend this and import all abstract classes
+ * The base class of this project To create a plugin, instead of extending {@link JavaPlugin},
+ * extend this and import all abstract classes
  *
- * Example:
- * <pre>
- * {@code
+ * <p>Example:
+ *
+ * <pre>{@code
  * public final class MyPlugin extends Core {
  *
  *   @Override
@@ -57,104 +56,100 @@ import java.util.ArrayList;
  *     return new String[]{"Mario", "Luigi"};
  *   }
  * }
- * }
- * </pre>
+ * }</pre>
  *
  * Source at: https://github.com/Fxcilities/PluginCored
  */
 public abstract class Core extends JavaPlugin implements Global {
 
-    public static CustomLogger console;
-    public static Core instance;
+  public static CustomLogger console;
+  public static Core instance;
 
-    public String notAPlayerMessage = "{PREFIX}&c&lYou must be a player to run this command!";
-    public String onCooldownMessage = "{PREFIX}&cYou are on a cooldown! You may run this command again in &l{TIME}";
+  public String notAPlayerMessage = "{PREFIX}&c&lYou must be a player to run this command!";
+  public String onCooldownMessage =
+      "{PREFIX}&cYou are on a cooldown! You may run this command again in &l{TIME}";
 
+  public ArrayList<ServerCommand> commands = new ArrayList<>();
 
-    public ArrayList<ServerCommand> commands = new ArrayList<>();
+  @Override
+  public void onEnable() {
+    console = new CustomLogger(this);
+    instance = this;
 
-    @Override
-    public void onEnable() {
-        console = new CustomLogger(this);
-        instance = this;
+    onPluginEnable();
+    CommandMap commandMap;
 
-        onPluginEnable();
-        CommandMap commandMap;
-
-        try {
-            Field bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
-            bukkitCommandMap.setAccessible(true);
-            commandMap = (CommandMap) bukkitCommandMap.get(Bukkit.getServer());
-        } catch (NoSuchFieldException | SecurityException | IllegalAccessException e) {
-            e.printStackTrace();
-            return;
-        }
-
-        for (ServerCommand command : commands) {
-            commandMap.register(command.getLabel(), command);
-            console.print(true, "Registered command /" + command.getLabel());
-        }
+    try {
+      Field bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
+      bukkitCommandMap.setAccessible(true);
+      commandMap = (CommandMap) bukkitCommandMap.get(Bukkit.getServer());
+    } catch (NoSuchFieldException | SecurityException | IllegalAccessException e) {
+      e.printStackTrace();
+      return;
     }
 
-    @Override
-    public void onDisable() {
-        onPluginDisable();
+    for (ServerCommand command : commands) {
+      commandMap.register(command.getLabel(), command);
+      console.print(true, "Registered command /" + command.getLabel());
     }
+  }
 
-    /**
-     * A function called when the plugin is enabled
-     */
-    public abstract void onPluginEnable();
-    /**
-     * A function called when the plugin is disabled
-     */
-    public abstract void onPluginDisable();
+  @Override
+  public void onDisable() {
+    onPluginDisable();
+  }
 
-    /**
-     * @return The prefix of the plugin
-     */
-    public abstract String getPrefix();
+  /** A function called when the plugin is enabled */
+  public abstract void onPluginEnable();
+  /** A function called when the plugin is disabled */
+  public abstract void onPluginDisable();
 
-    /**
-     * @return The version of the plugin
-     */
-    public abstract String getPluginVersion();
+  /**
+   * @return The prefix of the plugin
+   */
+  public abstract String getPrefix();
 
-    /**
-     * @return The name of the plugin
-     */
-    public abstract String getPluginName();
+  /**
+   * @return The version of the plugin
+   */
+  public abstract String getPluginVersion();
 
-    /**
-     * @return An array of authors of the plugin
-     */
-    public abstract String[] getPluginAuthors();
+  /**
+   * @return The name of the plugin
+   */
+  public abstract String getPluginName();
 
-    public void setNotAPlayerMessage(String message) {
-        this.notAPlayerMessage = message;
-    }
+  /**
+   * @return An array of authors of the plugin
+   */
+  public abstract String[] getPluginAuthors();
 
-    public void setOnCooldownMessage(String message) {
-        this.onCooldownMessage = message;
-    }
+  public void setNotAPlayerMessage(String message) {
+    this.notAPlayerMessage = message;
+  }
 
-    public FileConfiguration loadConfig(String fileName) {
-        Checks.nonNull(fileName, "The fileName argument");
+  public void setOnCooldownMessage(String message) {
+    this.onCooldownMessage = message;
+  }
 
-        FileConfiguration config = YamlConfiguration.loadConfiguration(new File(getDataFolder(), fileName));
-        saveResource(fileName, false);
-        InputStream stream = getResource(fileName);
+  public FileConfiguration loadConfig(String fileName) {
+    Checks.nonNull(fileName, "The fileName argument");
 
-        Checks.check(stream == null, "Failed to open a InputStream from the argument fileName");
+    FileConfiguration config =
+        YamlConfiguration.loadConfiguration(new File(getDataFolder(), fileName));
+    saveResource(fileName, false);
+    InputStream stream = getResource(fileName);
 
-        config.setDefaults(YamlConfiguration.loadConfiguration(new InputStreamReader(stream, Charsets.UTF_8)));
-        config.options().copyDefaults(true);
+    Checks.check(stream == null, "Failed to open a InputStream from the argument fileName");
 
-        return config;
-    }
+    config.setDefaults(
+        YamlConfiguration.loadConfiguration(new InputStreamReader(stream, Charsets.UTF_8)));
+    config.options().copyDefaults(true);
 
-    public static Core getInstance() {
-        return instance;
-    }
+    return config;
+  }
 
+  public static Core getInstance() {
+    return instance;
+  }
 }

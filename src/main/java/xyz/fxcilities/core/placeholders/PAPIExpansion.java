@@ -6,10 +6,9 @@ import xyz.fxcilities.core.Core;
 import xyz.fxcilities.core.placeholders.handlers.ExtensionHandler;
 
 /**
- * Manages a PlaceholderAPI extension
- * Example:
- * <pre>
- * {@code
+ * Manages a PlaceholderAPI extension Example:
+ *
+ * <pre>{@code
  * new PAPIExpansion(new ExtensionHandler() {
  *
  *     @Override
@@ -32,38 +31,40 @@ import xyz.fxcilities.core.placeholders.handlers.ExtensionHandler;
  *         return result;
  *     }
  * });
- * }
- * </pre>
+ * }</pre>
+ *
  * @see PlaceholderExpansion
  */
 public class PAPIExpansion extends PlaceholderExpansion {
-    private final ExtensionHandler manager;
+  private final ExtensionHandler manager;
 
-    /**
-     * Register and initialize PAPI extension
-     * @param manager The extension handler. Can be created with a lambda or {@code new ExtensionHandler() { ... }}
-     */
-    public PAPIExpansion(ExtensionHandler manager) {
-        this.manager = manager;
-    }
+  /**
+   * Register and initialize PAPI extension
+   *
+   * @param manager The extension handler. Can be created with a lambda or {@code new
+   *     ExtensionHandler() { ... }}
+   */
+  public PAPIExpansion(ExtensionHandler manager) {
+    this.manager = manager;
+  }
 
-    @Override
-    public String getIdentifier() {
-        return manager.getPrefix();
-    }
+  @Override
+  public String getIdentifier() {
+    return manager.getPrefix();
+  }
 
-    @Override
-    public String getAuthor() {
-        return Core.getInstance().getPluginAuthors()[0];
-    }
+  @Override
+  public String getAuthor() {
+    return Core.getInstance().getPluginAuthors()[0];
+  }
 
-    @Override
-    public String getVersion() {
-        return Core.getInstance().getPluginVersion();
-    }
+  @Override
+  public String getVersion() {
+    return Core.getInstance().getPluginVersion();
+  }
 
-    @Override
-    public String onPlaceholderRequest(Player player, String params) {
-        return manager.onRequest(player, params);
-    }
+  @Override
+  public String onPlaceholderRequest(Player player, String params) {
+    return manager.onRequest(player, params);
+  }
 }
