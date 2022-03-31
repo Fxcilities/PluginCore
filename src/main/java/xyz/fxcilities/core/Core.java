@@ -1,15 +1,14 @@
 package xyz.fxcilities.core;
 
 import com.google.common.base.Charsets;
-
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-
 import xyz.fxcilities.core.command.ServerCommand;
 import xyz.fxcilities.core.logging.CustomLogger;
+import xyz.fxcilities.core.placeholders.PAPIExpansion;
 
 import java.io.File;
 import java.io.InputStream;
@@ -94,6 +93,13 @@ public abstract class Core extends JavaPlugin implements Global {
         for (ServerCommand command : commands) {
             commandMap.register(command.getLabel(), command);
             console.print(true, "Registered command /" + command.getLabel());
+        }
+
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            console.print(true, "Found PlaceholderAPI, registering placeholders");
+            for (PAPIExpansion expansion : PAPIExpansion.expansions) {
+                expansion.register();
+            }
         }
     }
 

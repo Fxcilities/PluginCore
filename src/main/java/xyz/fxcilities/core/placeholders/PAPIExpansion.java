@@ -1,11 +1,12 @@
 package xyz.fxcilities.core.placeholders;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
-
 import org.bukkit.entity.Player;
-
 import xyz.fxcilities.core.Core;
 import xyz.fxcilities.core.placeholders.handlers.ExtensionHandler;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Manages a PlaceholderAPI extension Example:
@@ -38,6 +39,9 @@ import xyz.fxcilities.core.placeholders.handlers.ExtensionHandler;
  * @see PlaceholderExpansion
  */
 public class PAPIExpansion extends PlaceholderExpansion {
+
+    public static List<PAPIExpansion> expansions = new ArrayList<>();
+
     private final ExtensionHandler manager;
 
     /**
@@ -48,6 +52,7 @@ public class PAPIExpansion extends PlaceholderExpansion {
      */
     public PAPIExpansion(ExtensionHandler manager) {
         this.manager = manager;
+        expansions.add(this);
     }
 
     @Override

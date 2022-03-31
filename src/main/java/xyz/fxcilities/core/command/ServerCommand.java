@@ -3,7 +3,6 @@ package xyz.fxcilities.core.command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
-
 import xyz.fxcilities.core.Core;
 import xyz.fxcilities.core.collections.expiringmap.ExpiringMap;
 import xyz.fxcilities.core.logging.Chat;
