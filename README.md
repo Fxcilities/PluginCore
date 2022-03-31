@@ -2,6 +2,7 @@
 [![](https://img.shields.io/badge/dynamic/json?color=blue&label=JitPack&query=latestOk&url=https://jitpack.io/api/builds/com.github.Fxcilities/PluginCore/latest&style=for-the-badge)](https://jitpack.io/#Fxcilities/PluginCore)
 [![](https://img.shields.io/badge/dynamic/json?color=blue&label=JavaDoc&query=latestOk&url=https://jitpack.io/api/builds/com.github.Fxcilities/PluginCore/latest&style=for-the-badge)](https://javadoc.jitpack.io/com/github/Fxcilities/PluginCore/latest/javadoc/index.html)
 [![](https://img.shields.io/github/workflow/status/Fxcilities/PluginCore/Java%20CI%20with%20Gradle?color=blue&style=for-the-badge)](https://github.com/Fxcilities/PluginCore/actions)
+[![CodeFactor](https://www.codefactor.io/repository/github/fxcilities/plugincore/badge?style=for-the-badge)](https://www.codefactor.io/repository/github/fxcilities/plugincore)
 
 A core for all my spigot plugins
 
