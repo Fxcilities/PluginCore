@@ -1,7 +1,9 @@
 package xyz.fxcilities.core.placeholders;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
+
 import org.bukkit.entity.Player;
+
 import xyz.fxcilities.core.Core;
 import xyz.fxcilities.core.placeholders.handlers.ExtensionHandler;
 
@@ -36,35 +38,35 @@ import xyz.fxcilities.core.placeholders.handlers.ExtensionHandler;
  * @see PlaceholderExpansion
  */
 public class PAPIExpansion extends PlaceholderExpansion {
-  private final ExtensionHandler manager;
+    private final ExtensionHandler manager;
 
-  /**
-   * Register and initialize PAPI extension
-   *
-   * @param manager The extension handler. Can be created with a lambda or {@code new
-   *     ExtensionHandler() { ... }}
-   */
-  public PAPIExpansion(ExtensionHandler manager) {
-    this.manager = manager;
-  }
+    /**
+     * Register and initialize PAPI extension
+     *
+     * @param manager The extension handler. Can be created with a lambda or {@code new
+     *     ExtensionHandler() { ... }}
+     */
+    public PAPIExpansion(ExtensionHandler manager) {
+        this.manager = manager;
+    }
 
-  @Override
-  public String getIdentifier() {
-    return manager.getPrefix();
-  }
+    @Override
+    public String getIdentifier() {
+        return manager.getPrefix();
+    }
 
-  @Override
-  public String getAuthor() {
-    return Core.getInstance().getPluginAuthors()[0];
-  }
+    @Override
+    public String getAuthor() {
+        return Core.getInstance().getPluginAuthors()[0];
+    }
 
-  @Override
-  public String getVersion() {
-    return Core.getInstance().getPluginVersion();
-  }
+    @Override
+    public String getVersion() {
+        return Core.getInstance().getPluginVersion();
+    }
 
-  @Override
-  public String onPlaceholderRequest(Player player, String params) {
-    return manager.onRequest(player, params);
-  }
+    @Override
+    public String onPlaceholderRequest(Player player, String params) {
+        return manager.onRequest(player, params);
+    }
 }

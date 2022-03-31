@@ -1,18 +1,21 @@
 package xyz.fxcilities.core;
 
 import com.google.common.base.Charsets;
-import java.io.File;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
+
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+
 import xyz.fxcilities.core.command.ServerCommand;
 import xyz.fxcilities.core.logging.CustomLogger;
+
+import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 /**
  * The base class of this project To create a plugin, instead of extending {@link JavaPlugin},
@@ -62,94 +65,94 @@ import xyz.fxcilities.core.logging.CustomLogger;
  */
 public abstract class Core extends JavaPlugin implements Global {
 
-  public static CustomLogger console;
-  public static Core instance;
+    public static CustomLogger console;
+    public static Core instance;
 
-  public String notAPlayerMessage = "{PREFIX}&c&lYou must be a player to run this command!";
-  public String onCooldownMessage =
-      "{PREFIX}&cYou are on a cooldown! You may run this command again in &l{TIME}";
+    public String notAPlayerMessage = "{PREFIX}&c&lYou must be a player to run this command!";
+    public String onCooldownMessage =
+            "{PREFIX}&cYou are on a cooldown! You may run this command again in &l{TIME}";
 
-  public ArrayList<ServerCommand> commands = new ArrayList<>();
+    public ArrayList<ServerCommand> commands = new ArrayList<>();
 
-  @Override
-  public void onEnable() {
-    console = new CustomLogger(this);
-    instance = this;
+    @Override
+    public void onEnable() {
+        console = new CustomLogger(this);
+        instance = this;
 
-    onPluginEnable();
-    CommandMap commandMap;
+        onPluginEnable();
+        CommandMap commandMap;
 
-    try {
-      Field bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
-      bukkitCommandMap.setAccessible(true);
-      commandMap = (CommandMap) bukkitCommandMap.get(Bukkit.getServer());
-    } catch (NoSuchFieldException | SecurityException | IllegalAccessException e) {
-      e.printStackTrace();
-      return;
+        try {
+            Field bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
+            bukkitCommandMap.setAccessible(true);
+            commandMap = (CommandMap) bukkitCommandMap.get(Bukkit.getServer());
+        } catch (NoSuchFieldException | SecurityException | IllegalAccessException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        for (ServerCommand command : commands) {
+            commandMap.register(command.getLabel(), command);
+            console.print(true, "Registered command /" + command.getLabel());
+        }
     }
 
-    for (ServerCommand command : commands) {
-      commandMap.register(command.getLabel(), command);
-      console.print(true, "Registered command /" + command.getLabel());
+    @Override
+    public void onDisable() {
+        onPluginDisable();
     }
-  }
 
-  @Override
-  public void onDisable() {
-    onPluginDisable();
-  }
+    /** A function called when the plugin is enabled */
+    public abstract void onPluginEnable();
+    /** A function called when the plugin is disabled */
+    public abstract void onPluginDisable();
 
-  /** A function called when the plugin is enabled */
-  public abstract void onPluginEnable();
-  /** A function called when the plugin is disabled */
-  public abstract void onPluginDisable();
+    /**
+     * @return The prefix of the plugin
+     */
+    public abstract String getPrefix();
 
-  /**
-   * @return The prefix of the plugin
-   */
-  public abstract String getPrefix();
+    /**
+     * @return The version of the plugin
+     */
+    public abstract String getPluginVersion();
 
-  /**
-   * @return The version of the plugin
-   */
-  public abstract String getPluginVersion();
+    /**
+     * @return The name of the plugin
+     */
+    public abstract String getPluginName();
 
-  /**
-   * @return The name of the plugin
-   */
-  public abstract String getPluginName();
+    /**
+     * @return An array of authors of the plugin
+     */
+    public abstract String[] getPluginAuthors();
 
-  /**
-   * @return An array of authors of the plugin
-   */
-  public abstract String[] getPluginAuthors();
+    public void setNotAPlayerMessage(String message) {
+        this.notAPlayerMessage = message;
+    }
 
-  public void setNotAPlayerMessage(String message) {
-    this.notAPlayerMessage = message;
-  }
+    public void setOnCooldownMessage(String message) {
+        this.onCooldownMessage = message;
+    }
 
-  public void setOnCooldownMessage(String message) {
-    this.onCooldownMessage = message;
-  }
+    public FileConfiguration loadConfig(String fileName) {
+        Checks.nonNull(fileName, "The fileName argument");
 
-  public FileConfiguration loadConfig(String fileName) {
-    Checks.nonNull(fileName, "The fileName argument");
+        FileConfiguration config =
+                YamlConfiguration.loadConfiguration(new File(getDataFolder(), fileName));
+        saveResource(fileName, false);
+        InputStream stream = getResource(fileName);
 
-    FileConfiguration config =
-        YamlConfiguration.loadConfiguration(new File(getDataFolder(), fileName));
-    saveResource(fileName, false);
-    InputStream stream = getResource(fileName);
+        Checks.check(stream == null, "Failed to open a InputStream from the argument fileName");
 
-    Checks.check(stream == null, "Failed to open a InputStream from the argument fileName");
+        config.setDefaults(
+                YamlConfiguration.loadConfiguration(new InputStreamReader(stream, Charsets.UTF_8)));
+        config.options().copyDefaults(true);
 
-    config.setDefaults(
-        YamlConfiguration.loadConfiguration(new InputStreamReader(stream, Charsets.UTF_8)));
-    config.options().copyDefaults(true);
+        return config;
+    }
 
-    return config;
-  }
-
-  public static Core getInstance() {
-    return instance;
-  }
+    public static Core getInstance() {
+        return instance;
+    }
 }
