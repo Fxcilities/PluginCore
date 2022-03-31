@@ -172,12 +172,20 @@ public abstract class ServerCommand extends BukkitCommand {
      * @author http://www.java2s.com/example/java-utility-method/timeunit-convert/tostring-timeunit-unit-13d37.html
      */
     private String formattedTimeUnit(TimeUnit unit) {
-        return switch (unit) {
-            case HOURS, DAYS, MINUTES, SECONDS -> unit.toString().substring(0, 1).toLowerCase();
-            case MILLISECONDS -> "ms";
-            case MICROSECONDS -> "micros";
-            case NANOSECONDS -> "ns";
-        };
+        switch (unit) {
+            case HOURS:
+            case DAYS:
+            case MINUTES:
+            case SECONDS:
+                return unit.toString().substring(0, 1).toLowerCase();
+            case MILLISECONDS:
+                return "ms";
+            case MICROSECONDS:
+                return "micros";
+            case NANOSECONDS:
+                return "ns";
+        }
+        return "";
     }
 
 }
