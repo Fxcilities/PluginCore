@@ -1,7 +1,9 @@
 package xyz.fxcilities.core.placeholders;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
+
 import org.bukkit.entity.Player;
+
 import xyz.fxcilities.core.Core;
 import xyz.fxcilities.core.placeholders.handlers.ExtensionHandler;
 
