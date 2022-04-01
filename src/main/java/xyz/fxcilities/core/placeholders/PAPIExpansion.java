@@ -1,9 +1,7 @@
 package xyz.fxcilities.core.placeholders;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
-
 import org.bukkit.entity.Player;
-
 import xyz.fxcilities.core.Core;
 import xyz.fxcilities.core.placeholders.handlers.ExtensionHandler;
 
@@ -64,7 +62,7 @@ public class PAPIExpansion extends PlaceholderExpansion {
 
     @Override
     public String getAuthor() {
-        return Core.getInstance().getPluginAuthors()[0];
+        return String.join(", ", Core.getInstance().getDescription().getAuthors());
     }
 
     @Override
