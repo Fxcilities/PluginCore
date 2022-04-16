@@ -18,11 +18,19 @@ public class ParticleBuilder {
         this.particle = particle;
         this.data = data;
     }
+    
+    
+    /**
+     * @param particle The particle
+     */
+    public ParticleBuilder(@Nonnull Particle particle) {
+        this(particle, null);
+    }
 
     /**
      * @return if the particle needs to use its custom data
      */
     public boolean shouldUseData() {
-        return particle.getDataType() != Void.class;
+        return data == null || particle.getDataType() != Void.class;
     }
 }
