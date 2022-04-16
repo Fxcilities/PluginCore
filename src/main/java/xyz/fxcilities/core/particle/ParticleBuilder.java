@@ -18,8 +18,7 @@ public class ParticleBuilder {
         this.particle = particle;
         this.data = data;
     }
-    
-    
+
     /**
      * @param particle The particle
      */
