@@ -48,55 +48,58 @@ dependencies {
 ```java
 public final class MyPlugin extends Core {
 
-  @Override
-  public void onPluginEnable() {
-    console.print("Hello world!");
+    @Override
+    public void onPluginEnable() {
+        console.print("Hello world!");
 
-    // Initialize commands
-    new MyCommand();
-  }
+        // Initialize commands
+        new MyCommand();
+    }
 
-  @Override
-  public void onPluginDisable() {
-    console.print("Goodbye world!");
-  }
+    @Override
+    public void onPluginDisable() {
+        console.print("Goodbye world!");
+    }
 
-  @Override
-  public String getPrefix() {
-    return "&bMyPlugin > &f";
-  }
+    @Override
+    public String getPrefix() {
+        return "&bMyPlugin > &f";
+    }
 
-  @Override
-  public String getPluginVersion() {
-    return "v1.0";
-  }
+    @Override
+    public String getPluginVersion() {
+        return "v1.0";
+    }
 
-  @Override
-  public String getPluginName() {
-    return "MyPlugin";
-  }
+    @Override
+    public String getPluginName() {
+        return "MyPlugin";
+    }
 
-  @Override
-  public String[] getPluginAuthors() {
-    return new String[]{"Mario", "Luigi"};
-  }
+    @Override
+    public String[] getPluginAuthors() {
+        return new String[] {
+            "Mario",
+            "Luigi"
+        };
+    }
 }
 ```
 **MyCommand.java**
 ```java
-  public class MyCommand extends ServerCommand {
+public class MyCommand extends ServerCommand {
 
-  public MyCommand() {
-    super("hello", "says hello world", "/hello", true, Arrays.asList("helloworld", "world")); // label, description, usage, playerOnly, aliases
+    public MyCommand() {
+        super("hello", "says hello world", "/hello", true, Arrays.asList("helloworld", "world")); // label, description, usage, playerOnly, aliases
 
-    // Optional
-    setCooldownDuration(5, TimeUnit.SECONDS); // Five second cooldown, this line is optional.
-  }
+        // Optional
+        setCooldownDuration(5, TimeUnit.SECONDS); // Five second cooldown
+    }
 
-  @Override
-  public void onCommand() {
-    say(true, "&aHello world!"); // true to show the prefix of the plugin
-  }
+    @Override
+    public void onCommand() {
+        say(true, "&aHello world!"); // true to show the prefix of the plugin
+    }
 }
 ```
 
