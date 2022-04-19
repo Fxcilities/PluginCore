@@ -3,7 +3,6 @@ package xyz.fxcilities.core.command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
-
 import xyz.fxcilities.core.Core;
 import xyz.fxcilities.core.collections.expiringmap.ExpiringMap;
 import xyz.fxcilities.core.logging.Chat;
@@ -52,7 +51,7 @@ public abstract class ServerCommand extends BukkitCommand {
             ExpiringMap.builder().expiration(cooldownDuration, cooldownTimeUnit).build();
 
     /**
-     * Created a server command. Registers when initialization of command.
+     * Create a server command. Registers when initialization of command.
      *
      * @param label This is the name of the command, and is what you type followed by slash in chat
      * @param description The description of the command
@@ -62,7 +61,7 @@ public abstract class ServerCommand extends BukkitCommand {
      * @param aliases A list of command aliases
      * @see #onCommand
      */
-    public ServerCommand(
+        public ServerCommand(
             String label,
             String description,
             String usage,

@@ -1,13 +1,11 @@
 package xyz.fxcilities.core;
 
 import com.google.common.base.Charsets;
-
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-
 import xyz.fxcilities.core.command.ServerCommand;
 import xyz.fxcilities.core.logging.CustomLogger;
 import xyz.fxcilities.core.placeholders.PAPIExpansion;
@@ -63,7 +61,7 @@ import java.util.concurrent.TimeUnit;
  * }
  * }</pre>
  *
- * Source at: https://github.com/Fxcilities/PluginCored
+ * Source at: https://github.com/Fxcilities/PluginCore
  */
 public abstract class Core extends JavaPlugin implements Global {
 
