@@ -37,6 +37,10 @@ public class CustomLogger {
         logger.info(Chat.format(logRecord.toString()));
     }
 
+    /**
+     * Prints a message to console
+     * @param text The text to log
+     */
     public void print(String text) {
         print(false, text);
     }
