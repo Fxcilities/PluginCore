@@ -1,11 +1,13 @@
 package xyz.fxcilities.core;
 
 import com.google.common.base.Charsets;
+
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+
 import xyz.fxcilities.core.command.ServerCommand;
 import xyz.fxcilities.core.logging.CustomLogger;
 import xyz.fxcilities.core.placeholders.PAPIExpansion;
@@ -136,6 +138,7 @@ public abstract class Core extends JavaPlugin implements Global {
 
     /**
      * Sets the message for when a command is playerOnly and ran by console or command block.
+     *
      * @param message The new message. {PREFIX} will be replaced with the prefix of the plugin.
      * @see #getPrefix()
      */
@@ -145,7 +148,10 @@ public abstract class Core extends JavaPlugin implements Global {
 
     /**
      * Sets the message for when a user is on cooldown.
-     * @param message The new message. {PREFIX} will be replaced with the prefix of the plugin. {TIME} will be replaced with the time left on the cooldown in the cooldown duration TimeUnit.
+     *
+     * @param message The new message. {PREFIX} will be replaced with the prefix of the plugin.
+     *     {TIME} will be replaced with the time left on the cooldown in the cooldown duration
+     *     TimeUnit.
      * @see #getPrefix()
      * @see ServerCommand#setCooldownDuration(long, TimeUnit)
      */
@@ -155,6 +161,7 @@ public abstract class Core extends JavaPlugin implements Global {
 
     /**
      * Loads a yml configuration file from the plugin's data folder.
+     *
      * @param fileName The name of the file. Example: "config.yml"
      * @return The loaded configuration file
      */
