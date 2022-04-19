@@ -39,6 +39,7 @@ public class CustomLogger {
 
     /**
      * Prints a message to console
+     *
      * @param text The text to log
      */
     public void print(String text) {
