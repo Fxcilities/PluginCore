@@ -1,13 +1,11 @@
 package xyz.fxcilities.core;
 
 import com.google.common.base.Charsets;
-
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-
 import xyz.fxcilities.core.command.ServerCommand;
 import xyz.fxcilities.core.logging.CustomLogger;
 import xyz.fxcilities.core.placeholders.PAPIExpansion;
@@ -17,6 +15,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 /**
  * The base class of this project To create a plugin, instead of extending {@link JavaPlugin},
@@ -135,14 +134,30 @@ public abstract class Core extends JavaPlugin implements Global {
      */
     public abstract String[] getPluginAuthors();
 
+    /**
+     * Sets the message for when a command is playerOnly and ran by console or command block.
+     * @param message The new message. {PREFIX} will be replaced with the prefix of the plugin.
+     * @see #getPrefix()
+     */
     public void setNotAPlayerMessage(String message) {
         this.notAPlayerMessage = message;
     }
 
+    /**
+     * Sets the message for when a user is on cooldown.
+     * @param message The new message. {PREFIX} will be replaced with the prefix of the plugin. {TIME} will be replaced with the time left on the cooldown in the cooldown duration TimeUnit.
+     * @see #getPrefix()
+     * @see ServerCommand#setCooldownDuration(long, TimeUnit)
+     */
     public void setOnCooldownMessage(String message) {
         this.onCooldownMessage = message;
     }
 
+    /**
+     * Loads a yml configuration file from the plugin's data folder.
+     * @param fileName The name of the file. Example: "config.yml"
+     * @return The loaded configuration file
+     */
     public FileConfiguration loadConfig(String fileName) {
         Checks.nonNull(fileName, "The fileName argument");
 
@@ -160,6 +175,9 @@ public abstract class Core extends JavaPlugin implements Global {
         return config;
     }
 
+    /**
+     * @return The instance of the plugin
+     */
     public static Core getInstance() {
         return instance;
     }

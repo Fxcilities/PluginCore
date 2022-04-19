@@ -2,6 +2,7 @@ package xyz.fxcilities.core.particle;
 
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.BoundingBox;
 
@@ -41,7 +42,7 @@ public class Visualizer extends BukkitRunnable {
     }
 
     /**
-     * @see BukkitRunnable#runTaskTimer
+     * @see BukkitRunnable#runTaskTimer(Plugin, long, long)
      */
     @Override
     public void run() {
