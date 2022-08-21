@@ -1,5 +1,7 @@
 package xyz.fxcilities.core.command;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -22,6 +24,7 @@ public abstract class ServerSubCommand {
     public final ServerCommand parent;
     public final String label, description, usage;
     public final List<String> aliases;
+    public List<String> tabCompleteArgs = new ArrayList<>();
 
     /**
      * Creates a sub command. Registers when initialization of command.
@@ -49,6 +52,15 @@ public abstract class ServerSubCommand {
     }
 
     public abstract void onCommand();
+
+    /**
+     * Adds arguments for tab completion.
+     * @param args The arguments to add
+     * @see ServerCommand#addTabCompleteArgs(String...)
+     */
+    public void addTabCompleteArgs(String... args) {
+        this.tabCompleteArgs.addAll(Arrays.asList(args));
+    }
 
     /**
      * @see ServerCommand#say(boolean, String)

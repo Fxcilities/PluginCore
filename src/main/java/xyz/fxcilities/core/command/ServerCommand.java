@@ -7,10 +7,7 @@ import xyz.fxcilities.core.Core;
 import xyz.fxcilities.core.collections.expiringmap.ExpiringMap;
 import xyz.fxcilities.core.logging.Chat;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -43,6 +40,7 @@ public abstract class ServerCommand extends BukkitCommand {
     protected String[] args;
 
     public List<ServerSubCommand> subCommands = new ArrayList<>();
+    public List<String> tabCompleteArgs = new ArrayList<>();
 
     private long cooldownDuration = 30;
     private TimeUnit cooldownTimeUnit = TimeUnit.SECONDS;
@@ -104,6 +102,14 @@ public abstract class ServerCommand extends BukkitCommand {
         cooldownMap.setExpiration(cooldownDuration, cooldownTimeUnit);
     }
 
+    /**
+     * Adds arguments for tab completion.
+     * @param args The arguments to add
+     */
+    public void addTabCompleteArgs(String... args) {
+        this.tabCompleteArgs.addAll(Arrays.asList(args));
+    }
+
     private String addPrefix(String message) {
         return message.replace("{PREFIX}", Core.getInstance().getPrefix());
     }
@@ -147,6 +153,30 @@ public abstract class ServerCommand extends BukkitCommand {
 
         onCommand();
         return true;
+    }
+
+    @Override
+    public List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException {
+        if (!(sender instanceof Player)) return null;
+        populate(sender, args);
+
+        if (args.length == 1) {
+            List<String> tabComplete = new ArrayList<>();
+            for (ServerSubCommand subCommand : this.subCommands) {
+                if (subCommand.label.startsWith(args[0]) || subCommand.aliases.contains(args[0])) { // if the sub command starts with the argument
+                    tabComplete.add(subCommand.label);
+                }
+                if (subCommand.label.equalsIgnoreCase(args[0])) {
+                    tabComplete.addAll(subCommand.tabCompleteArgs);
+                }
+            }
+
+            tabComplete.add(getLabel());
+            tabComplete.addAll(this.tabCompleteArgs);
+
+            return tabComplete;
+        }
+        return Collections.emptyList();
     }
 
     /**
