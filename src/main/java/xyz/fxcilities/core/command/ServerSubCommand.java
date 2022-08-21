@@ -55,6 +55,7 @@ public abstract class ServerSubCommand {
 
     /**
      * Adds arguments for tab completion.
+     *
      * @param args The arguments to add
      * @see ServerCommand#addTabCompleteArgs(String...)
      */

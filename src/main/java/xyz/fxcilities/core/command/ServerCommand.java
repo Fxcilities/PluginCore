@@ -3,6 +3,7 @@ package xyz.fxcilities.core.command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
+
 import xyz.fxcilities.core.Core;
 import xyz.fxcilities.core.collections.expiringmap.ExpiringMap;
 import xyz.fxcilities.core.logging.Chat;
@@ -59,7 +60,7 @@ public abstract class ServerCommand extends BukkitCommand {
      * @param aliases A list of command aliases
      * @see #onCommand
      */
-        public ServerCommand(
+    public ServerCommand(
             String label,
             String description,
             String usage,
@@ -104,6 +105,7 @@ public abstract class ServerCommand extends BukkitCommand {
 
     /**
      * Adds arguments for tab completion.
+     *
      * @param args The arguments to add
      */
     public void addTabCompleteArgs(String... args) {
@@ -156,14 +158,17 @@ public abstract class ServerCommand extends BukkitCommand {
     }
 
     @Override
-    public List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException {
+    public List<String> tabComplete(CommandSender sender, String alias, String[] args)
+            throws IllegalArgumentException {
         if (!(sender instanceof Player)) return null;
         populate(sender, args);
 
         if (args.length == 1) {
             List<String> tabComplete = new ArrayList<>();
             for (ServerSubCommand subCommand : this.subCommands) {
-                if (subCommand.label.startsWith(args[0]) || subCommand.aliases.contains(args[0])) { // if the sub command starts with the argument
+                if (subCommand.label.startsWith(args[0])
+                        || subCommand.aliases.contains(
+                                args[0])) { // if the sub command starts with the argument
                     tabComplete.add(subCommand.label);
                 }
                 if (subCommand.label.equalsIgnoreCase(args[0])) {

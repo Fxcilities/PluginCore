@@ -1,11 +1,13 @@
 package xyz.fxcilities.core;
 
 import com.google.common.base.Charsets;
+
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+
 import xyz.fxcilities.core.command.ServerCommand;
 import xyz.fxcilities.core.logging.CustomLogger;
 import xyz.fxcilities.core.placeholders.PAPIExpansion;
