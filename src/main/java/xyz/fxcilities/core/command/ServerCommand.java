@@ -166,8 +166,7 @@ public abstract class ServerCommand extends BukkitCommand {
         if (args.length == 1) {
             List<String> tabComplete = new ArrayList<>();
             for (ServerSubCommand subCommand : this.subCommands) {
-                if (subCommand.label.startsWith(args[0])
-                        || subCommand.aliases.contains(args[0])) {
+                if (subCommand.label.startsWith(args[0]) || subCommand.aliases.contains(args[0])) {
                     tabComplete.add(subCommand.label);
                 }
                 if (subCommand.label.equalsIgnoreCase(args[0])) {
