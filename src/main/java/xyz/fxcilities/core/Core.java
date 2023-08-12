@@ -113,6 +113,7 @@ public abstract class Core extends JavaPlugin implements Global {
 
     /** A function called when the plugin is enabled */
     public abstract void onPluginEnable();
+
     /** A function called when the plugin is disabled */
     public abstract void onPluginDisable();
 

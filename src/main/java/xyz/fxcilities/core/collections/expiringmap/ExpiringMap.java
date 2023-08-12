@@ -65,6 +65,7 @@ public class ExpiringMap<K, V> implements ConcurrentMap<K, V> {
     private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
     private final Lock readLock = readWriteLock.readLock();
     private final Lock writeLock = readWriteLock.writeLock();
+
     /** Guarded by "readWriteLock" */
     private final EntryMap<K, V> entries;
 
@@ -494,15 +495,19 @@ public class ExpiringMap<K, V> implements ConcurrentMap<K, V> {
     /** Expiring map entry implementation. */
     static class ExpiringEntry<K, V> implements Comparable<ExpiringEntry<K, V>> {
         final AtomicLong expirationNanos;
+
         /** Epoch time at which the entry is expected to expire */
         final AtomicLong expectedExpiration;
 
         final AtomicReference<ExpirationPolicy> expirationPolicy;
         final K key;
+
         /** Guarded by "this" */
         volatile Future<?> entryFuture;
+
         /** Guarded by "this" */
         V value;
+
         /** Guarded by "this" */
         volatile boolean scheduled;
 
