@@ -51,7 +51,7 @@ public abstract class ServerSubCommand {
         parent.registerSub(this);
     }
 
-    public abstract void onCommand();
+    public abstract void onCommand(String[] arguments);
 
     /**
      * Adds arguments for tab completion.

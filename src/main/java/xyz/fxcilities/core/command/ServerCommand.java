@@ -147,7 +147,7 @@ public abstract class ServerCommand extends BukkitCommand {
             for (ServerSubCommand subCommand : this.subCommands) {
                 if (subCommand.label.equalsIgnoreCase(args[0])
                         || subCommand.aliases.contains(args[0].toLowerCase())) {
-                    subCommand.onCommand();
+                    subCommand.onCommand(Arrays.copyOfRange(args, 1, args.length));
                     return true;
                 }
             }
