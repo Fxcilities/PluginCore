@@ -1,5 +1,7 @@
 package xyz.fxcilities.core.command;
 
+import org.bukkit.command.CommandSender;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,6 +27,7 @@ public abstract class ServerSubCommand {
     public final String label, description, usage;
     public final List<String> aliases;
     public List<String> tabCompleteArgs = new ArrayList<>();
+    protected CommandSender sender;
 
     /**
      * Creates a sub command. Registers when initialization of command.
@@ -47,6 +50,7 @@ public abstract class ServerSubCommand {
         this.description = description;
         this.usage = usage;
         this.aliases = aliases;
+        this.sender = parent.getSender();
 
         parent.registerSub(this);
     }
